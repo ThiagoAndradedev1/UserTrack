@@ -4,4 +4,6 @@ export interface IUserState {
   users: IUser[] | IUser | string;
   loading: boolean;
   error: string;
+  getUsers: Function;
+  addUser: Function;
 }

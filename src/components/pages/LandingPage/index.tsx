@@ -1,9 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
 import { Grid, Image } from "semantic-ui-react";
-import { LandingPageStyle } from "./LandingPageElements";
+import UserContext from "../../../context/users/usersContext";
+import { IUserState } from "../../../models/userState";
 
 const HomePage: React.FC = () => {
+  // const userContext = useContext(UserContext);
+
+  const { getUsers, addUser } = useContext<IUserState>(UserContext);
+
+  useEffect(() => {
+    addUser();
+    getUsers();
+  }, []);
+
   return (
     <Grid>
       <Grid.Row columns={3}>

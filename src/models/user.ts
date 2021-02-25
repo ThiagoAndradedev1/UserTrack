@@ -1,9 +1,9 @@
 import { IAddress } from "./address";
 
 export interface IUser {
-  id: number;
+  id?: number;
   nome: string;
   cpf: string;
   email: string;
-  endereco: IAddress;
+  endereco?: IAddress;
 }

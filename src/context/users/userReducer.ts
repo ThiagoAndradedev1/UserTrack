@@ -4,7 +4,7 @@ import { USER_TYPES } from "../../constants/usersConstants";
 
 type Action = {
   payload: IUser[] | IUser;
-  error: string;
+  error?: string;
   type: USER_TYPES;
 };
 
@@ -27,7 +27,7 @@ export const userReducer: React.Reducer<IUserState, Action> = (
     case USER_TYPES.GET_USERS_ERROR:
       return {
         ...state,
-        error: action.error,
+        error: action.error ?? "",
         loading: false,
       };
     default:

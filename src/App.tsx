@@ -4,8 +4,8 @@ import { GlobalStyle } from "../src/globalStyles";
 import "semantic-ui-css/semantic.min.css";
 import { Container } from "semantic-ui-react";
 import PrivateRoute from "../src/components/routing/PrivateRoute";
-import AuthState from "../src/context/auth/AuthState";
-import ContactState from "./context/users/UserState";
+// import AuthState from "../src/context/auth/AuthState";
+import UserState from "./context/users/UserState";
 import Navbar from "./components/layout/Navbar";
 import LandingPage from "./components/pages/LandingPage";
 import Login from "./components/auth/Login";
@@ -14,23 +14,23 @@ import NotFound from "./components/pages/NotFound";
 const App: React.FC = () => {
   return (
     <Fragment>
-      <AuthState>
-        <ContactState>
-          <Router>
-            <GlobalStyle />
-            <Fragment>
-              <Navbar />
-              <Container style={{ marginTop: "7em" }}>
-                <Switch>
-                  <Route exact path='/' component={LandingPage} />
-                  <Route exact path='/login' component={Login} />
-                  <Route component={NotFound} />
-                </Switch>
-              </Container>
-            </Fragment>
-          </Router>
-        </ContactState>
-      </AuthState>
+      {/* <AuthState> */}
+      <UserState>
+        <Router>
+          <GlobalStyle />
+          <Fragment>
+            <Navbar />
+            <Container style={{ marginTop: "7em" }}>
+              <Switch>
+                <Route exact path='/' component={LandingPage} />
+                <Route exact path='/login' component={Login} />
+                <Route component={NotFound} />
+              </Switch>
+            </Container>
+          </Fragment>
+        </Router>
+      </UserState>
+      {/* </AuthState> */}
     </Fragment>
   );
 };

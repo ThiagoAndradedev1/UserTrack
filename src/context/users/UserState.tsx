@@ -10,15 +10,37 @@ const UserState: React.FC = (props) => {
     users: [],
     loading: false,
     error: "",
+    getUsers: () => {},
+    addUser: () => {},
   };
 
   const [state, dispatch] = useReducer(userReducer, initialState);
 
-  const getUsers = async () => {};
+  const getUsers = async () => {
+    try {
+      const res = await Users.list();
+      dispatch({ type: USER_TYPES.GET_USERS_LOADED, payload: res });
+    } catch (error) {}
+  };
+
+  const addUser = async () => {
+    const res = await Users.create({
+      nome: "Rafael",
+      cpf: "",
+      email: "rafael@gmail.com",
+    });
+    // dispatch({ type: USER_TYPES.GET_USERS_LOADED, payload: res });
+  };
 
   return (
     <ContactContext.Provider
-      value={{ users: state.users, loading: state.loading, error: state.error }}
+      value={{
+        users: state.users,
+        loading: state.loading,
+        error: state.error,
+        getUsers,
+        addUser,
+      }}
     >
       {props.children}
     </ContactContext.Provider>
