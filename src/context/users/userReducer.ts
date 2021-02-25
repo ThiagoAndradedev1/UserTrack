@@ -7,6 +7,10 @@ interface ActionUser {
   payload: IUser[];
 }
 
+interface ActionLoading {
+  type: USER_TYPES.GET_USERS_LOADING;
+}
+
 interface ActionError {
   type: USER_TYPES.GET_USERS_ERROR;
   payload: string;
@@ -16,7 +20,7 @@ export const setActionUser = (res: IUser[]) => {
   return { type: USER_TYPES.GET_USERS_COMPLETED, payload: res };
 };
 
-type Actions = ActionUser | ActionError;
+type Actions = ActionUser | ActionError | ActionLoading;
 
 export const userReducer: React.Reducer<IUserState, Actions> = (
   state: IUserState,
@@ -33,11 +37,11 @@ export const userReducer: React.Reducer<IUserState, Actions> = (
         ...state,
         error: action.payload,
       };
-    // case USER_TYPES.GET_USERS_LOADING:
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   };
+    case USER_TYPES.GET_USERS_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
     // case USER_TYPES.GET_USERS_COMPLETED:
     //   return {
     //     ...state,

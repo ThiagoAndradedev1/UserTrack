@@ -20,7 +20,7 @@ const UserState: React.FC = (props) => {
 
   const getUsers = async () => {
     try {
-      // dispatch({ type: USER_TYPES.GET_USERS_LOADING, payload: res });
+      dispatch({ type: USER_TYPES.GET_USERS_LOADING });
       const res = await Users.list();
       dispatch({ type: USER_TYPES.GET_USERS_COMPLETED, payload: res });
     } catch (error) {
@@ -34,6 +34,7 @@ const UserState: React.FC = (props) => {
       cpf: "",
       email: "rafael@gmail.com",
     });
+
     // dispatch({ type: USER_TYPES.GET_USERS_LOADED, payload: res });
   };
 
