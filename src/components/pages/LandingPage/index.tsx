@@ -6,11 +6,16 @@ import { IUserState } from "../../../models/userState";
 const HomePage: React.FC = () => {
   // const userContext = useContext(UserContext);
 
-  const { getUsers, addUser } = useContext<IUserState>(UserContext);
+  const { getUsers, addUser, updateUser, deleteUser } = useContext<IUserState>(
+    UserContext
+  );
 
   useEffect(() => {
     addUser();
     getUsers();
+    updateUser();
+    deleteUser();
+    // eslint-disable-next-line
   }, []);
 
   return (

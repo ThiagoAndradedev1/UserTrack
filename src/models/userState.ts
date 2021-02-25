@@ -6,4 +6,6 @@ export interface IUserState {
   error: string;
   getUsers: Function;
   addUser: Function;
+  updateUser: Function;
+  deleteUser: Function;
 }

@@ -7,6 +7,8 @@ const userStateDefault: IUserState = {
   error: "",
   getUsers: () => {},
   addUser: () => {},
+  updateUser: () => {},
+  deleteUser: () => {},
 };
 
 const contactContext = createContext<IUserState>(userStateDefault);

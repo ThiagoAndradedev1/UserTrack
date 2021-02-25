@@ -12,14 +12,17 @@ const UserState: React.FC = (props) => {
     error: "",
     getUsers: () => {},
     addUser: () => {},
+    updateUser: () => {},
+    deleteUser: () => {},
   };
 
   const [state, dispatch] = useReducer(userReducer, initialState);
 
   const getUsers = async () => {
     try {
+      // dispatch({ type: USER_TYPES.GET_USERS_LOADING, payload: res });
       const res = await Users.list();
-      dispatch({ type: USER_TYPES.GET_USERS_LOADED, payload: res });
+      dispatch({ type: USER_TYPES.GET_USERS_COMPLETED, payload: res });
     } catch (error) {
       // dispatch({ type: USER_TYPES.GET_USERS_ERROR, error: "Error" });
     }
@@ -34,6 +37,19 @@ const UserState: React.FC = (props) => {
     // dispatch({ type: USER_TYPES.GET_USERS_LOADED, payload: res });
   };
 
+  const updateUser = async () => {
+    const res = await Users.update({
+      id: 6,
+      nome: "Chico",
+      cpf: "21313131",
+      email: "rafael@gmail.com",
+    });
+  };
+
+  const deleteUser = async () => {
+    const res = await Users.delete("19");
+  };
+
   return (
     <ContactContext.Provider
       value={{
@@ -42,6 +58,8 @@ const UserState: React.FC = (props) => {
         error: state.error,
         getUsers,
         addUser,
+        updateUser,
+        deleteUser,
       }}
     >
       {props.children}

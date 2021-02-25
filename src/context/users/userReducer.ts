@@ -2,34 +2,54 @@ import { IUserState } from "../../models/userState";
 import { IUser } from "../../models/user";
 import { USER_TYPES } from "../../constants/usersConstants";
 
-type Action = {
-  payload: IUser[] | IUser;
-  error?: string;
-  type: USER_TYPES;
+interface ActionUser {
+  type: USER_TYPES.GET_USERS_COMPLETED;
+  payload: IUser[];
+}
+
+interface ActionError {
+  type: USER_TYPES.GET_USERS_ERROR;
+  payload: string;
+}
+
+export const setActionUser = (res: IUser[]) => {
+  return { type: USER_TYPES.GET_USERS_COMPLETED, payload: res };
 };
 
-export const userReducer: React.Reducer<IUserState, Action> = (
+type Actions = ActionUser | ActionError;
+
+export const userReducer: React.Reducer<IUserState, Actions> = (
   state: IUserState,
-  action: Action
+  action: Actions
 ) => {
   switch (action.type) {
-    case USER_TYPES.GET_USERS_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case USER_TYPES.GET_USERS_LOADED:
+    case USER_TYPES.GET_USERS_COMPLETED:
       return {
         ...state,
         users: action.payload,
-        loading: false,
       };
     case USER_TYPES.GET_USERS_ERROR:
       return {
         ...state,
-        error: action.error ?? "",
-        loading: false,
+        error: action.payload,
       };
+    // case USER_TYPES.GET_USERS_LOADING:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+    // case USER_TYPES.GET_USERS_COMPLETED:
+    //   return {
+    //     ...state,
+    //     users: action.payload,
+    //     loading: false,
+    //   };
+    // case USER_TYPES.GET_USERS_ERROR:
+    //   return {
+    //     ...state,
+    //     error: action.error ?? "",
+    //     loading: false,
+    //   };
     default:
       return state;
   }
