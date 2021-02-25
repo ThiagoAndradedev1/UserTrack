@@ -20,7 +20,9 @@ const UserState: React.FC = (props) => {
     try {
       const res = await Users.list();
       dispatch({ type: USER_TYPES.GET_USERS_LOADED, payload: res });
-    } catch (error) {}
+    } catch (error) {
+      // dispatch({ type: USER_TYPES.GET_USERS_ERROR, error: "Error" });
+    }
   };
 
   const addUser = async () => {
