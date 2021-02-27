@@ -1,19 +1,35 @@
 import React, { Fragment, useContext, useEffect } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import { Table, Grid, Input, Button } from "semantic-ui-react";
 import UserContext from "../../../context/users/usersContext";
+import { IUser } from "../../../models/user";
 import { IUserState } from "../../../models/userState";
 
-const UserTable: React.FC = () => {
+interface ChildComponentProps extends RouteComponentProps {}
+
+const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
   const userContext = useContext<IUserState>(UserContext);
 
-  const { getUsers, deleteUser, users, loading, error } = userContext;
+  const {
+    getUsers,
+    deleteUser,
+    currentUser,
+    users,
+    loading,
+    error,
+  } = userContext;
 
   useEffect(() => {
     getUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onDelete = async (id: number) => {
+  const onUpdate = (user: IUser) => {
+    history.push("/userform");
+    currentUser(user);
+  };
+
+  const onDelete = (id: number) => {
     deleteUser(id);
   };
 
@@ -46,7 +62,9 @@ const UserTable: React.FC = () => {
                     <Table.Cell>{user.email}</Table.Cell>
                     <Table.Cell>
                       {" "}
-                      <Button color='black'>Editar</Button>
+                      <Button onClick={() => onUpdate(user)} color='black'>
+                        Editar
+                      </Button>
                       <Button onClick={() => onDelete(user.id!)} color='red'>
                         Deletar
                       </Button>

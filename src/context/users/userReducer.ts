@@ -54,6 +54,8 @@ export const userReducer: React.Reducer<IUserState, Actions> = (
         error: action.payload,
         loading: false,
       };
+    case USER_TYPES.SET_ENDERECO:
+      return { ...state, enderecoViaCep: action.payload };
     default:
       return state;
   }

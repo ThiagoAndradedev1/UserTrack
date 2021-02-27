@@ -1,7 +1,13 @@
 export interface IAddress {
+  // cep: string;
+  // rua: string;
+  // numero: number;
+  // bairro: string;
+  // cidade: string;
   cep: string;
-  rua: string;
-  numero: number;
+  logradouro: string;
+  complemento: string;
   bairro: string;
-  cidade: string;
+  localidade: string;
+  numero: number;
 }

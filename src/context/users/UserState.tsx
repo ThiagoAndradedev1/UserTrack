@@ -21,6 +21,8 @@ const UserState: React.FC = (props) => {
     loading: false,
     error: "",
     current: null,
+    endereco: null,
+    getEndereco: () => {},
     getUsers: () => {},
     addUser: () => {},
     updateUser: () => {},
@@ -48,6 +50,14 @@ const UserState: React.FC = (props) => {
         nome: "Maria12",
         cpf: "",
         email: "rafael@gmail.com",
+        endereco: {
+          cep: "111111",
+          bairro: "22222",
+          complemento: "3333",
+          logradouro: "4444",
+          localidade: "55555",
+          numero: 0,
+        },
       });
       dispatch(setCreateUser(res));
     } catch (error) {
@@ -64,6 +74,14 @@ const UserState: React.FC = (props) => {
         nome: "Chico",
         cpf: "21313131",
         email: "rafael@gmail.com",
+        endereco: {
+          cep: "",
+          bairro: "",
+          complemento: "",
+          logradouro: "",
+          localidade: "",
+          numero: 0,
+        },
       });
       dispatch(setUpdateUser(res));
     } catch (error) {
@@ -89,6 +107,14 @@ const UserState: React.FC = (props) => {
     dispatch(clearCurrentUser());
   };
 
+  const getEndereco = async (cep: string) => {
+    try {
+      const res = await Users.getEndereco(cep);
+      console.log(res);
+      // dispatch()
+    } catch (error) {}
+  };
+
   return (
     <ContactContext.Provider
       value={{
@@ -96,6 +122,8 @@ const UserState: React.FC = (props) => {
         loading: state.loading,
         error: state.error,
         current: state.current,
+        endereco: state.endereco,
+        getEndereco,
         getUsers,
         addUser,
         updateUser,

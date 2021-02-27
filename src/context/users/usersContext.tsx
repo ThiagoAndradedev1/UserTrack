@@ -6,6 +6,8 @@ const userStateDefault: IUserState = {
   loading: false,
   error: "",
   current: null,
+  endereco: null,
+  getEndereco: () => {},
   getUsers: () => {},
   addUser: () => {},
   updateUser: () => {},

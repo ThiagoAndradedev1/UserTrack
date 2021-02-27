@@ -11,6 +11,7 @@ import LandingPage from "./components/pages/LandingPage";
 import Login from "./components/auth/Login";
 import NotFound from "./components/pages/NotFound";
 import UserTable from "./components/users/UserTable";
+import UserForm from "./components/users/UserForm";
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
                 <Route exact path='/' component={LandingPage} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/users' component={UserTable} />
+                <Route exact path='/userform' component={UserForm} />
                 <Route component={NotFound} />
               </Switch>
             </Container>

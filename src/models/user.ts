@@ -5,5 +5,5 @@ export interface IUser {
   nome: string;
   cpf: string;
   email: string;
-  endereco?: IAddress;
+  endereco: IAddress;
 }
