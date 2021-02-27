@@ -10,6 +10,7 @@ import Navbar from "./components/layout/Navbar";
 import LandingPage from "./components/pages/LandingPage";
 import Login from "./components/auth/Login";
 import NotFound from "./components/pages/NotFound";
+import UserTable from "./components/users/UserTable";
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
               <Switch>
                 <Route exact path='/' component={LandingPage} />
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/users' component={UserTable} />
                 <Route component={NotFound} />
               </Switch>
             </Container>

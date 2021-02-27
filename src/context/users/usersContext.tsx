@@ -5,10 +5,13 @@ const userStateDefault: IUserState = {
   users: [],
   loading: false,
   error: "",
+  current: null,
   getUsers: () => {},
   addUser: () => {},
   updateUser: () => {},
   deleteUser: () => {},
+  clearCurrent: () => {},
+  currentUser: () => {},
 };
 
 const contactContext = createContext<IUserState>(userStateDefault);

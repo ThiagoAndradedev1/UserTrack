@@ -13,6 +13,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.7",
     "axios": "^0.21.1",
+    "concurrently": "^6.0.0",
     "final-form": "^4.20.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -30,7 +31,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "concurrently \"npm run start\" \"json-server --watch db.json --delay 2000 --port 5000\""
   },
   "eslintConfig": {
     "extends": [

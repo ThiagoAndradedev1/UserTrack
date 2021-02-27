@@ -1,59 +1,59 @@
 import { IUserState } from "../../models/userState";
-import { IUser } from "../../models/user";
 import { USER_TYPES } from "../../constants/usersConstants";
-
-interface ActionUser {
-  type: USER_TYPES.GET_USERS_COMPLETED;
-  payload: IUser[];
-}
-
-interface ActionLoading {
-  type: USER_TYPES.GET_USERS_LOADING;
-}
-
-interface ActionError {
-  type: USER_TYPES.GET_USERS_ERROR;
-  payload: string;
-}
-
-export const setActionUser = (res: IUser[]) => {
-  return { type: USER_TYPES.GET_USERS_COMPLETED, payload: res };
-};
-
-type Actions = ActionUser | ActionError | ActionLoading;
+import { Actions } from "./store";
 
 export const userReducer: React.Reducer<IUserState, Actions> = (
   state: IUserState,
   action: Actions
 ) => {
   switch (action.type) {
-    case USER_TYPES.GET_USERS_COMPLETED:
+    case USER_TYPES.GET_USERS:
       return {
         ...state,
         users: action.payload,
+        loading: false,
       };
-    case USER_TYPES.GET_USERS_ERROR:
+    case USER_TYPES.CREATE_USER:
       return {
         ...state,
-        error: action.payload,
+        users: [action.payload, ...state.users],
+        loading: false,
       };
-    case USER_TYPES.GET_USERS_LOADING:
+    case USER_TYPES.UPDATE_USER:
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.id === action.payload.id ? action.payload : user
+        ),
+        loading: false,
+      };
+    case USER_TYPES.DELETE_USER:
+      return {
+        ...state,
+        users: state.users.filter((user) => user.id !== action.payload),
+        loading: false,
+      };
+    case USER_TYPES.SET_CURRENT_USER:
+      return {
+        ...state,
+        current: action.payload,
+      };
+    case USER_TYPES.CLEAR_CURRENT_USER:
+      return {
+        ...state,
+        current: null,
+      };
+    case USER_TYPES.USER_LOADING:
       return {
         ...state,
         loading: true,
       };
-    // case USER_TYPES.GET_USERS_COMPLETED:
-    //   return {
-    //     ...state,
-    //     users: action.payload,
-    //     loading: false,
-    //   };
-    // case USER_TYPES.GET_USERS_ERROR:
-    //   return {
-    //     ...state,
-    //     error: action.error ?? "",
-    //     loading: false,
-    //   };
+    case USER_TYPES.USER_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     default:
       return state;
   }

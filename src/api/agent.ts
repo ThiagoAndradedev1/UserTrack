@@ -24,7 +24,7 @@ const Users = {
   list: (): Promise<IUser[]> => requests.get("/usuarios"),
   create: (user: IUser) => requests.post("/usuarios", user, config),
   update: (user: IUser) => requests.put(`/usuarios/${user.id}`, user, config),
-  delete: (id: string) => requests.del(`/usuarios/${id}`),
+  delete: (id: number) => requests.del(`/usuarios/${id}`),
 };
 
 export default Users;
