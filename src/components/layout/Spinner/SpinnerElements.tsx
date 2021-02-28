@@ -1,11 +1,2 @@
-import React from "react";
-
-const SpinnerElements: React.FC = () => {
-  return (
-    <div>
-      <h1>Spinner</h1>
-    </div>
-  );
-};
-
-export default SpinnerElements;
+import styled from "styled-components";
+import { Menu, Header, Button } from "semantic-ui-react";

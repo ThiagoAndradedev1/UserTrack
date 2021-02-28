@@ -1,10 +1,15 @@
-import React from "react";
+import React, { Fragment } from "react";
+import spinner from "./spinner.gif";
 
 const Spinner: React.FC = () => {
   return (
-    <div>
-      <h1>Spinner</h1>
-    </div>
+    <Fragment>
+      <img
+        src={spinner}
+        alt="Loading"
+        style={{ width: "100px", margin: "auto", display: "block" }}
+      />
+    </Fragment>
   );
 };
 

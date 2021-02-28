@@ -6,6 +6,8 @@ import AuthContext from "../../../context/auth/authContext";
 import { IUser } from "../../../models/user";
 import { IUserState } from "../../../models/userState";
 import { IAuthState } from "../../../models/authState";
+import { StyledButton } from "./UserTableElements";
+import Spinner from "../../layout/Spinner/index";
 
 interface ChildComponentProps extends RouteComponentProps {}
 
@@ -60,20 +62,23 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
   return (
     <Fragment>
       {loading ? (
-        <h1>Loading..</h1>
+        <Spinner />
       ) : (
         <Grid>
-          {users.length === 0 && <h1>Não existe nenhum usuário!</h1>}
           <Grid.Column width={2}></Grid.Column>
-          <Grid.Column width={12}>
+          <Grid.Column mobile={12}>
             <Input
               onChange={(e) => setSearchUserTerm(e.target.value)}
               fluid
               icon="search"
               placeholder="Search..."
             />
-            <button onClick={() => searchUser()}>Search</button>
-            <button onClick={() => clearUser()}>Clear</button>
+            <StyledButton secondary fluid onClick={() => searchUser()}>
+              Search
+            </StyledButton>
+            <StyledButton fluid onClick={() => clearUser()}>
+              Clear
+            </StyledButton>
             <Table columns={4}>
               <Table.Header>
                 <Table.Row>
@@ -85,6 +90,13 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
+                {users.length === 0 && (
+                  <Table.Row>
+                    {" "}
+                    <Table.Cell>Não existem usuários cadastrados!</Table.Cell>
+                  </Table.Row>
+                )}
+
                 {users.map((user) => (
                   <Table.Row key={user.id}>
                     <Table.Cell>{user.nome}</Table.Cell>
@@ -93,12 +105,20 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
                     <Table.Cell>{user.email}</Table.Cell>
                     <Table.Cell>
                       {" "}
-                      <Button onClick={() => onUpdate(user)} color="black">
+                      <StyledButton
+                        fluid
+                        onClick={() => onUpdate(user)}
+                        color="black"
+                      >
                         Editar
-                      </Button>
-                      <Button onClick={() => onDelete(user.id!)} color="red">
+                      </StyledButton>
+                      <StyledButton
+                        fluid
+                        onClick={() => onDelete(user.id!)}
+                        color="red"
+                      >
                         Deletar
-                      </Button>
+                      </StyledButton>
                     </Table.Cell>
                   </Table.Row>
                 ))}

@@ -1,57 +1,79 @@
-import React, { Fragment, useContext } from "react";
-import {
-  Menu,
-  Header,
-  Icon,
-  Segment,
-  Image,
-  Container,
-  Button,
-} from "semantic-ui-react";
+import React, { useContext } from "react";
+import { Header, Icon, Image, Menu } from "semantic-ui-react";
 import { StyledMenu, StyledHeader, StyledButton } from "./NavbarElements";
-import {
-  Link,
-  NavLink,
-  RouteComponentProps,
-  useHistory,
-} from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import AuthContext from "../../../context/auth/authContext";
+import UserContext from "../../../context/users/usersContext";
 import { IAuthState } from "../../../models/authState";
 import { removeTokenLocalStorage } from "../../../utils/utils";
+import { IUserState } from "../../../models/userState";
 
 const Navbar: React.FC = () => {
   const authContext = useContext<IAuthState>(AuthContext);
-  const { logout } = authContext;
+  const { logout, authenticated } = authContext;
+
+  const userContext = useContext<IUserState>(UserContext);
+  const { clearCurrent } = userContext;
 
   const history = useHistory();
 
   const onLogout = () => {
     logout();
+    clearCurrent();
     history.push("/login");
     removeTokenLocalStorage();
   };
 
   return (
-    <StyledMenu inverted>
-      <Menu.Item header as={NavLink} exact to="/">
-        <StyledHeader>
-          <Icon name="user circle" />
-          <Header.Content>User Track</Header.Content>
-        </StyledHeader>{" "}
+    <Menu stackable inverted>
+      <Menu.Item as={NavLink} exact to="/">
+        <Header inverted as="h3">
+          <Icon name="users" />
+          <Header.Content>
+            User Tracker
+            <Header.Subheader>Manage all your users</Header.Subheader>
+          </Header.Content>
+        </Header>
+        {/* {" "}
+        <Header as="h3" inverted color="grey">
+          <Image
+            circular
+            src="https://blog.cpanel.com/wp-content/uploads/2019/08/user-01.png"
+          />{" "}
+          User Tracker
+        </Header> */}
       </Menu.Item>
 
-      <Link to="/users">GO TO USERS</Link>
+      {authenticated && (
+        <Menu.Item
+          as={NavLink}
+          onClick={() => clearCurrent()}
+          exact
+          to="/userform"
+          name="features"
+        >
+          Adicionar Contatos
+        </Menu.Item>
+      )}
 
-      <Menu.Item position="right">
-        <StyledButton icon="add" content="Adicionar Contato" />
-        <StyledButton icon="user" content="Lista de Usuários" />
-        <StyledButton
+      {authenticated && (
+        <Menu.Item as={NavLink} exact to="/users" name="testimonials">
+          Usuários
+        </Menu.Item>
+      )}
+
+      {authenticated && (
+        <Menu.Item
           onClick={() => onLogout()}
-          icon="log out"
-          content="Log Out"
-        />
-      </Menu.Item>
-    </StyledMenu>
+          as={NavLink}
+          exact
+          to="/login"
+          name="sign-in"
+        >
+          Log Out
+        </Menu.Item>
+      )}
+    </Menu>
   );
 };
 

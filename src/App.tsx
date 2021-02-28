@@ -22,12 +22,12 @@ const App: React.FC = () => {
             <GlobalStyle />
             <Fragment>
               <Navbar />
-              <Container style={{ marginTop: "7em" }}>
+              <Container style={{ marginTop: "3em" }}>
                 <Switch>
                   <Route exact path="/" component={LandingPage} />
                   <Route exact path="/login" component={Login} />
                   <ProtectedRoute exact path="/users" component={UserTable} />
-                  <Route exact path="/userform" component={UserForm} />
+                  <ProtectedRoute exact path="/userform" component={UserForm} />
                   <Route component={NotFound} />
                 </Switch>
               </Container>

@@ -1,2 +1,6 @@
 import styled from "styled-components";
-import { Menu, Header, Button } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
+
+export const StyledButton = styled(Button)({
+  marginTop: "15px!important",
+});

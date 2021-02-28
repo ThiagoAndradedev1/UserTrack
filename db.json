@@ -1,42 +1,9 @@
 {
   "usuarios": [
     {
-      "nome": "Manoel",
-      "cpf": "23630000568",
-      "email": "manoel@gmail.com",
-      "endereco": {
-        "cep": "01010-001",
-        "logradouro": "Rua São Bento",
-        "complemento": "de 320 ao fim - lado par",
-        "bairro": "Centro",
-        "localidade": "São Paulo",
-        "uf": "SP",
-        "ibge": "3550308",
-        "gia": "1004",
-        "ddd": "11",
-        "siafi": "7107",
-        "numero": "236"
-      },
-      "id": 1
-    },
-    {
-      "nome": "Maria12",
-      "cpf": "",
-      "email": "rafael@gmail.com",
-      "endereco": {
-        "cep": "111111",
-        "bairro": "22222",
-        "complemento": "3333",
-        "logradouro": "4444",
-        "localidade": "55555",
-        "numero": 0
-      },
-      "id": 2
-    },
-    {
-      "nome": "Fulaninho",
-      "email": "fulano@gmail.com",
-      "cpf": "0000000",
+      "nome": "fdsfdsfsd",
+      "email": "fdsfsdfsdfsdfs",
+      "cpf": "fsdfdsfsdfsd",
       "endereco": {
         "cep": "49503-229",
         "logradouro": "Rua José Ferreira Lima",
@@ -48,9 +15,27 @@
         "gia": "",
         "ddd": "79",
         "siafi": "3157",
-        "numero": "828"
+        "numero": "082"
       },
-      "id": 4
+      "id": 1
+    },
+    {
+      "nome": "Carlos",
+      "email": "asdsadasdsada",
+      "cpf": "dsadsad",
+      "endereco": {
+        "cep": "49503-229",
+        "logradouro": "Rua José Ferreira Lima",
+        "complemento": "",
+        "bairro": "Serrano",
+        "localidade": "Itabaiana",
+        "uf": "SE",
+        "ibge": "2802908",
+        "gia": "",
+        "ddd": "79",
+        "siafi": "3157"
+      },
+      "id": 2
     }
   ]
 }

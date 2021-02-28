@@ -5,12 +5,18 @@ import React, {
   useEffect,
   ChangeEvent,
 } from "react";
-import { Button, Form, Grid, Icon, Segment } from "semantic-ui-react";
+import { Button, Form, Grid, Icon, Message, Segment } from "semantic-ui-react";
 import UserContext from "../../../context/users/usersContext";
 import { IUser } from "../../../models/user";
 import Users from "../../../api/agent";
+import Spinner from "../../layout/Spinner/index";
+import { RouteComponentProps } from "react-router-dom";
 
-const UserForm: React.FC = () => {
+interface ChildComponentProps extends RouteComponentProps {}
+
+const UserForm: React.FC<ChildComponentProps> = ({ history }) => {
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const userContext = useContext(UserContext);
 
   const { current, updateUser, loading, addUser } = userContext;
@@ -69,22 +75,48 @@ const UserForm: React.FC = () => {
   };
 
   const onSubmit = () => {
-    if (current) {
-      updateUser(user);
+    console.log(user);
+    if (
+      nome !== "" &&
+      cpf !== "" &&
+      email !== "" &&
+      endereco.cep !== "" &&
+      endereco.bairro !== "" &&
+      endereco.logradouro !== "" &&
+      endereco.localidade !== "" &&
+      endereco.numero !== ""
+    ) {
+      setError(false);
+      if (current) {
+        updateUser(user);
+        history.push("/users");
+      } else {
+        addUser(user);
+        history.push("/users");
+      }
     } else {
-      addUser(user);
+      setError(true);
+      setErrorMsg("Você precisa preencher todos os campos!");
     }
   };
 
   return (
     <Fragment>
       {loading ? (
-        <h1>Loading...</h1>
+        <Spinner />
       ) : (
-        <Grid>
-          <Grid.Column width={4}></Grid.Column>
-          <Grid.Column width={8}>
+        <Grid
+          textAlign="center"
+          style={{ height: "80vh" }}
+          verticalAlign="middle"
+        >
+          <Grid.Column mobile={12} style={{ maxWidth: 450 }}>
             <Segment>
+              {error && (
+                <Message negative>
+                  <Message.Header>{errorMsg}</Message.Header>
+                </Message>
+              )}
               <Form onSubmit={onSubmit}>
                 <Form.Field>
                   <label>Nome</label>
@@ -160,16 +192,106 @@ const UserForm: React.FC = () => {
                   <Form.Input
                     name="numero"
                     onChange={(event) => onChange(event, 1)}
-                    value={endereco.numero || ""}
+                    value={endereco.numero || 0}
                     placeholder="Last Name"
                   />
                 </Form.Field>
-                <Button type="submit">Submit</Button>
+                <Button fluid secondary type="submit">
+                  Submit
+                </Button>
               </Form>
             </Segment>
           </Grid.Column>
-          <Grid.Column width={4}></Grid.Column>
         </Grid>
+        // <Grid>
+        //   <Grid.Column width={4}></Grid.Column>
+        //   <Grid.Column width={8}>
+        //     <Segment>
+        //       <Form onSubmit={onSubmit}>
+        //         <Form.Field>
+        //           <label>Nome</label>
+        //           <Form.Input
+        //             name="nome"
+        //             onChange={(event) => onChange(event, 0)}
+        //             value={nome || ""}
+        //             placeholder="First Name"
+        //           />
+        //         </Form.Field>
+        //         <Form.Field>
+        //           <label>CPF</label>
+        //           <Form.Input
+        //             name="cpf"
+        //             onChange={(event) => onChange(event, 0)}
+        //             value={cpf}
+        //             placeholder="Last Name"
+        //           />
+        //         </Form.Field>
+        //         <Form.Field>
+        //           <label>Email</label>
+        //           <Form.Input
+        //             name="email"
+        //             onChange={(event) => onChange(event, 0)}
+        //             value={email || ""}
+        //             placeholder="Last Name"
+        //           />
+        //         </Form.Field>
+        //         <Form.Field>
+        //           <label>CEP</label>
+        //           <Form.Input
+        //             value={endereco.cep || ""}
+        //             onChange={(event) => onChange(event, 1)}
+        //             name="cep"
+        //             icon={
+        //               <Icon
+        //                 onClick={() => changeEndereco(endereco.cep)}
+        //                 name="search"
+        //                 inverted
+        //                 circular
+        //                 link
+        //               />
+        //             }
+        //             placeholder="Last Name"
+        //           />
+        //         </Form.Field>
+        //         <Form.Field>
+        //           <label>Rua</label>
+        //           <Form.Input
+        //             value={endereco.logradouro || ""}
+        //             readOnly
+        //             placeholder="Last Name"
+        //           />
+        //         </Form.Field>
+        //         <Form.Field>
+        //           <label>Bairro</label>
+        //           <Form.Input
+        //             value={endereco.bairro}
+        //             readOnly
+        //             placeholder="Last Name"
+        //           />
+        //         </Form.Field>
+        //         <Form.Field>
+        //           <label>Cidade</label>
+        //           <Form.Input
+        //             value={endereco.localidade || ""}
+        //             readOnly
+        //             placeholder="Last Name"
+        //           />
+        //         </Form.Field>
+        //         <Form.Field>
+        //           <label>Número</label>
+        //           <Form.Input
+        //             name="numero"
+        //             onChange={(event) => onChange(event, 1)}
+        //             value={endereco.numero || ""}
+        //             placeholder="Last Name"
+        //           />
+        //         </Form.Field>
+        //         <Button type="submit">Submit</Button>
+        //       </Form>
+        //     </Segment>
+        //   </Grid.Column>
+        //   <Grid.Column width={4}></Grid.Column>
+        // </Grid>
       )}
     </Fragment>
   );

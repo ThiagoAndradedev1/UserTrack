@@ -9,5 +9,5 @@ export interface IAddress {
   complemento: string;
   bairro: string;
   localidade: string;
-  numero: number;
+  numero: number | string;
 }
