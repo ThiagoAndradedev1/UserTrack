@@ -1,6 +1,5 @@
 import { IAddress } from "./address";
 import { IUser } from "./user";
-import { IViaCep } from "./via-cep";
 
 export interface IUserState {
   users: IUser[];

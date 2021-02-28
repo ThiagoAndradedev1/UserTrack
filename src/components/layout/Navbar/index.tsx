@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { Header, Icon, Image, Menu } from "semantic-ui-react";
-import { StyledMenu, StyledHeader, StyledButton } from "./NavbarElements";
+import { Header, Icon, Menu } from "semantic-ui-react";
 import { NavLink, useHistory } from "react-router-dom";
 import AuthContext from "../../../context/auth/authContext";
 import UserContext from "../../../context/users/usersContext";
@@ -34,14 +33,6 @@ const Navbar: React.FC = () => {
             <Header.Subheader>Manage all your users</Header.Subheader>
           </Header.Content>
         </Header>
-        {/* {" "}
-        <Header as="h3" inverted color="grey">
-          <Image
-            circular
-            src="https://blog.cpanel.com/wp-content/uploads/2019/08/user-01.png"
-          />{" "}
-          User Tracker
-        </Header> */}
       </Menu.Item>
 
       {authenticated && (

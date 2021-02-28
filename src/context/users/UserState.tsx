@@ -55,7 +55,6 @@ const UserState: React.FC = (props) => {
 
   const updateUser = async (user: IUser) => {
     try {
-      console.log(user);
       dispatch(setUserLoading());
       const res = await Users.update(user);
       dispatch(setCurrentUser(res));
@@ -86,7 +85,6 @@ const UserState: React.FC = (props) => {
   const getEndereco = async (cep: string) => {
     try {
       const res = await Users.getEndereco(cep);
-      console.log(res);
       // dispatch()
     } catch (error) {}
   };

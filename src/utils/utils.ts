@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export const setTokenLocalStorage = () => {
   localStorage.setItem(
     "jwttoken",
@@ -8,3 +10,7 @@ export const setTokenLocalStorage = () => {
 export const removeTokenLocalStorage = () => {
   localStorage.removeItem("jwttoken");
 };
+
+export const notifySuccess = (msg: string) => toast.success(`✔️ ${msg}`);
+export const notifyError = (msg: string) => toast.error(`❌ ${msg}`);
+export const notifyInfo = (msg: string) => toast.info(`🔥 ${msg}`);

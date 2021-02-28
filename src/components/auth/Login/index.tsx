@@ -4,17 +4,14 @@ import {
   Form,
   Grid,
   Header,
-  Icon,
   Message,
   Image,
   Button,
 } from "semantic-ui-react";
-import { StyledLabel, StyledButton } from "./LoginElements";
 import AuthContext from "../../../context/auth/authContext";
 import { RouteComponentProps } from "react-router-dom";
 import { setTokenLocalStorage } from "../../../utils/utils";
-import Spinner from "../../layout/Spinner/index";
-
+import { notifySuccess } from "../../../utils/utils";
 interface ChildComponentProps extends RouteComponentProps {}
 
 const Login: React.FC<ChildComponentProps> = ({ history }) => {
@@ -24,7 +21,7 @@ const Login: React.FC<ChildComponentProps> = ({ history }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const authContext = useContext(AuthContext);
 
-  const { loading, login } = authContext;
+  const { login } = authContext;
 
   const handleSubmit = () => {
     if (email !== "" && password !== "") {
@@ -32,6 +29,7 @@ const Login: React.FC<ChildComponentProps> = ({ history }) => {
       login();
       history.push("/users");
       setTokenLocalStorage();
+      notifySuccess("Login feito com successo!");
     } else {
       setError(true);
       setErrorMsg("Você precisa preencher todos os campos!");
@@ -41,7 +39,7 @@ const Login: React.FC<ChildComponentProps> = ({ history }) => {
   return (
     <Grid textAlign="center" verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Image src="assets/logo_dash.svg" />
+        <Image src="assets/login_img.svg" />
         <Header as="h2" color="teal" textAlign="center"></Header>
         <Form onSubmit={handleSubmit} size="large">
           <Segment stacked>
@@ -76,47 +74,6 @@ const Login: React.FC<ChildComponentProps> = ({ history }) => {
         </Form>
       </Grid.Column>
     </Grid>
-    // <Grid textAlign="center" style={{ height: "80vh" }} verticalAlign="middle">
-    //   <Grid.Column mobile={14} style={{ maxWidth: 450 }}>
-    //     {loading ? (
-    //       <Spinner />
-    //     ) : (
-    //       <Segment placeholder>
-    //         <Header icon>
-    //           <Icon disabled name="users" />
-    //         </Header>{" "}
-    //         {error && (
-    //           <Message negative>
-    //             <Message.Header>{errorMsg}</Message.Header>
-    //           </Message>
-    //         )}
-    //         <Form onSubmit={handleSubmit}>
-    //           <Form.Field>
-    //             <StyledLabel>Email</StyledLabel>
-    //             <input
-    //               onChange={(e) => setEmail(e.target.value)}
-    //               type="email"
-    //               placeholder="Email"
-    //               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-    //             />
-    //           </Form.Field>
-    //           <Form.Field>
-    //             <StyledLabel>Senha</StyledLabel>
-    //             <input
-    //               onChange={(e) => setPassword(e.target.value)}
-    //               type="password"
-    //               placeholder="Last Name"
-    //               minLength={4}
-    //             />
-    //           </Form.Field>
-    //           <StyledButton fluid type="submit">
-    //             Submit
-    //           </StyledButton>
-    //         </Form>
-    //       </Segment>
-    //     )}
-    //   </Grid.Column>
-    // </Grid>
   );
 };
 

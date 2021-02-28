@@ -12,6 +12,8 @@ import NotFound from "./components/pages/NotFound";
 import UserTable from "./components/users/UserTable";
 import UserForm from "./components/users/UserForm";
 import { ProtectedRoute } from "./components/routing/PrivateRoute";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
   return (
@@ -22,6 +24,7 @@ const App: React.FC = () => {
             <GlobalStyle />
             <Fragment>
               <Navbar />
+              <ToastContainer />
               <Container style={{ marginTop: "3em" }}>
                 <Switch>
                   <Route exact path="/" component={LandingPage} />

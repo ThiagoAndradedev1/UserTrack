@@ -11,6 +11,8 @@ import { IUser } from "../../../models/user";
 import Users from "../../../api/agent";
 import Spinner from "../../layout/Spinner/index";
 import { RouteComponentProps } from "react-router-dom";
+import { notifyError, notifyInfo } from "../../../utils/utils";
+import InputMask from "react-input-mask";
 
 interface ChildComponentProps extends RouteComponentProps {}
 
@@ -23,7 +25,6 @@ const UserForm: React.FC<ChildComponentProps> = ({ history }) => {
 
   useEffect(() => {
     if (current !== null) {
-      console.log(current);
       setUser(current);
     } else {
       setUser({
@@ -69,13 +70,16 @@ const UserForm: React.FC<ChildComponentProps> = ({ history }) => {
   };
 
   const changeEndereco = async (cep: string) => {
-    const res = await Users.getEndereco(cep);
-    setUser({ ...user, endereco: res });
-    console.log(user);
+    const unmaskCEP = cep.replace(/[^\d]/g, "");
+    try {
+      const res = await Users.getEndereco(unmaskCEP);
+      setUser({ ...user, endereco: res });
+    } catch (error) {
+      notifyError("Não foi possível achar esse CEP!");
+    }
   };
 
   const onSubmit = () => {
-    console.log(user);
     if (
       nome !== "" &&
       cpf !== "" &&
@@ -89,9 +93,11 @@ const UserForm: React.FC<ChildComponentProps> = ({ history }) => {
       setError(false);
       if (current) {
         updateUser(user);
+        notifyInfo("Usuário editado com successo!");
         history.push("/users");
       } else {
         addUser(user);
+        notifyInfo("Usuário criado com successo!");
         history.push("/users");
       }
     } else {
@@ -148,20 +154,26 @@ const UserForm: React.FC<ChildComponentProps> = ({ history }) => {
                 <Form.Field>
                   <label>CEP</label>
                   <Form.Input
+                    as={InputMask}
+                    mask="99.999-999"
                     value={endereco.cep || ""}
                     onChange={(event) => onChange(event, 1)}
                     name="cep"
-                    icon={
-                      <Icon
-                        onClick={() => changeEndereco(endereco.cep)}
-                        name="search"
-                        inverted
-                        circular
-                        link
-                      />
-                    }
                     placeholder="Last Name"
                   />
+                  <Button
+                    fluid
+                    animated="vertical"
+                    onClick={() => changeEndereco(endereco.cep)}
+                  >
+                    <Button.Content hidden>Procurar CEP</Button.Content>
+                    <Button.Content visible>
+                      <Icon name="search" />
+                    </Button.Content>
+                  </Button>
+                  <p style={{ fontSize: "0.8em", padding: "5px" }}>
+                    Clique na lupa para achar o seu endereço.
+                  </p>
                 </Form.Field>
                 <Form.Field>
                   <label>Rua</label>
@@ -203,95 +215,6 @@ const UserForm: React.FC<ChildComponentProps> = ({ history }) => {
             </Segment>
           </Grid.Column>
         </Grid>
-        // <Grid>
-        //   <Grid.Column width={4}></Grid.Column>
-        //   <Grid.Column width={8}>
-        //     <Segment>
-        //       <Form onSubmit={onSubmit}>
-        //         <Form.Field>
-        //           <label>Nome</label>
-        //           <Form.Input
-        //             name="nome"
-        //             onChange={(event) => onChange(event, 0)}
-        //             value={nome || ""}
-        //             placeholder="First Name"
-        //           />
-        //         </Form.Field>
-        //         <Form.Field>
-        //           <label>CPF</label>
-        //           <Form.Input
-        //             name="cpf"
-        //             onChange={(event) => onChange(event, 0)}
-        //             value={cpf}
-        //             placeholder="Last Name"
-        //           />
-        //         </Form.Field>
-        //         <Form.Field>
-        //           <label>Email</label>
-        //           <Form.Input
-        //             name="email"
-        //             onChange={(event) => onChange(event, 0)}
-        //             value={email || ""}
-        //             placeholder="Last Name"
-        //           />
-        //         </Form.Field>
-        //         <Form.Field>
-        //           <label>CEP</label>
-        //           <Form.Input
-        //             value={endereco.cep || ""}
-        //             onChange={(event) => onChange(event, 1)}
-        //             name="cep"
-        //             icon={
-        //               <Icon
-        //                 onClick={() => changeEndereco(endereco.cep)}
-        //                 name="search"
-        //                 inverted
-        //                 circular
-        //                 link
-        //               />
-        //             }
-        //             placeholder="Last Name"
-        //           />
-        //         </Form.Field>
-        //         <Form.Field>
-        //           <label>Rua</label>
-        //           <Form.Input
-        //             value={endereco.logradouro || ""}
-        //             readOnly
-        //             placeholder="Last Name"
-        //           />
-        //         </Form.Field>
-        //         <Form.Field>
-        //           <label>Bairro</label>
-        //           <Form.Input
-        //             value={endereco.bairro}
-        //             readOnly
-        //             placeholder="Last Name"
-        //           />
-        //         </Form.Field>
-        //         <Form.Field>
-        //           <label>Cidade</label>
-        //           <Form.Input
-        //             value={endereco.localidade || ""}
-        //             readOnly
-        //             placeholder="Last Name"
-        //           />
-        //         </Form.Field>
-        //         <Form.Field>
-        //           <label>Número</label>
-        //           <Form.Input
-        //             name="numero"
-        //             onChange={(event) => onChange(event, 1)}
-        //             value={endereco.numero || ""}
-        //             placeholder="Last Name"
-        //           />
-        //         </Form.Field>
-        //         <Button type="submit">Submit</Button>
-        //       </Form>
-        //     </Segment>
-        //   </Grid.Column>
-        //   <Grid.Column width={4}></Grid.Column>
-        // </Grid>
       )}
     </Fragment>
   );
