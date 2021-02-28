@@ -41,9 +41,10 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
         <h1>{error}</h1>
       ) : (
         <Grid>
+          {users.length === 0 && <h1>Não existe nenhum usuário!</h1>}
           <Grid.Column width={2}></Grid.Column>
           <Grid.Column width={12}>
-            <Input fluid icon='search' placeholder='Search...' />
+            <Input fluid icon="search" placeholder="Search..." />
             <Table columns={4}>
               <Table.Header>
                 <Table.Row>
@@ -53,19 +54,18 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
                   <Table.HeaderCell></Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
-              {users.length === 0 && <h1>Não existe nenhum usuário!</h1>}
               <Table.Body>
                 {users.map((user) => (
-                  <Table.Row>
+                  <Table.Row key={user.id}>
                     <Table.Cell>{user.cpf}</Table.Cell>
                     <Table.Cell>{user.email}</Table.Cell>
                     <Table.Cell>{user.email}</Table.Cell>
                     <Table.Cell>
                       {" "}
-                      <Button onClick={() => onUpdate(user)} color='black'>
+                      <Button onClick={() => onUpdate(user)} color="black">
                         Editar
                       </Button>
-                      <Button onClick={() => onDelete(user.id!)} color='red'>
+                      <Button onClick={() => onDelete(user.id!)} color="red">
                         Deletar
                       </Button>
                     </Table.Cell>

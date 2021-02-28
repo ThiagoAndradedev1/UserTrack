@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { IAddress } from "../models/address";
 import { IUser } from "../models/user";
 import { IViaCep } from "../models/via-cep";
 
@@ -26,7 +27,7 @@ const Users = {
   create: (user: IUser) => requests.post("/usuarios", user, config),
   update: (user: IUser) => requests.put(`/usuarios/${user.id}`, user, config),
   delete: (id: number) => requests.del(`/usuarios/${id}`),
-  getEndereco: (cep: string): Promise<IViaCep> =>
+  getEndereco: (cep: string): Promise<IAddress> =>
     requests.get(`https://viacep.com.br/ws/${cep}/json/`),
 };
 

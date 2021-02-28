@@ -65,24 +65,12 @@ const UserState: React.FC = (props) => {
     }
   };
 
-  const updateUser = async () => {
+  const updateUser = async (user: IUser) => {
     try {
+      console.log(user);
       dispatch(setUserLoading());
-
-      const res = await Users.update({
-        id: 6,
-        nome: "Chico",
-        cpf: "21313131",
-        email: "rafael@gmail.com",
-        endereco: {
-          cep: "",
-          bairro: "",
-          complemento: "",
-          logradouro: "",
-          localidade: "",
-          numero: 0,
-        },
-      });
+      const res = await Users.update(user);
+      dispatch(setCurrentUser(res));
       dispatch(setUpdateUser(res));
     } catch (error) {
       dispatch(setUserError("Erro ao tentar atualizar o usuário."));
