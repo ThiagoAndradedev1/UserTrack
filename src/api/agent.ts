@@ -23,7 +23,8 @@ const requests = {
 };
 
 const Users = {
-  list: (): Promise<IUser[]> => requests.get("/usuarios"),
+  list: (filter: string = ""): Promise<IUser[]> =>
+    requests.get(`usuarios?q=${filter}`),
   create: (user: IUser) => requests.post("/usuarios", user, config),
   update: (user: IUser) => requests.put(`/usuarios/${user.id}`, user, config),
   delete: (id: number) => requests.del(`/usuarios/${id}`),

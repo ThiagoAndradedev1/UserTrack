@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { Table, Grid, Input, Button } from "semantic-ui-react";
 import UserContext from "../../../context/users/usersContext";
@@ -9,6 +9,7 @@ interface ChildComponentProps extends RouteComponentProps {}
 
 const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
   const userContext = useContext<IUserState>(UserContext);
+  const [searchUserTerm, setSearchUserTerm] = useState<string>("");
 
   const {
     getUsers,
@@ -33,6 +34,14 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
     deleteUser(id);
   };
 
+  const searchUser = () => {
+    getUsers(searchUserTerm ?? "");
+  };
+
+  const clearUser = () => {
+    getUsers();
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -44,10 +53,18 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
           {users.length === 0 && <h1>Não existe nenhum usuário!</h1>}
           <Grid.Column width={2}></Grid.Column>
           <Grid.Column width={12}>
-            <Input fluid icon="search" placeholder="Search..." />
+            <Input
+              onChange={(e) => setSearchUserTerm(e.target.value)}
+              fluid
+              icon="search"
+              placeholder="Search..."
+            />
+            <button onClick={() => searchUser()}>Search</button>
+            <button onClick={() => clearUser()}>Clear</button>
             <Table columns={4}>
               <Table.Header>
                 <Table.Row>
+                  <Table.HeaderCell>Nome</Table.HeaderCell>
                   <Table.HeaderCell>CPF</Table.HeaderCell>
                   <Table.HeaderCell>Email</Table.HeaderCell>
                   <Table.HeaderCell>Cidade</Table.HeaderCell>
@@ -57,6 +74,7 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
               <Table.Body>
                 {users.map((user) => (
                   <Table.Row key={user.id}>
+                    <Table.Cell>{user.nome}</Table.Cell>
                     <Table.Cell>{user.cpf}</Table.Cell>
                     <Table.Cell>{user.email}</Table.Cell>
                     <Table.Cell>{user.email}</Table.Cell>

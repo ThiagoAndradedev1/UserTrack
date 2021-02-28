@@ -46,6 +46,25 @@
         "numero": 0
       },
       "id": 3
+    },
+    {
+      "nome": "Fulaninho",
+      "email": "fulano@gmail.com",
+      "cpf": "0000000",
+      "endereco": {
+        "cep": "49503-229",
+        "logradouro": "Rua José Ferreira Lima",
+        "complemento": "",
+        "bairro": "Serrano",
+        "localidade": "Itabaiana",
+        "uf": "SE",
+        "ibge": "2802908",
+        "gia": "",
+        "ddd": "79",
+        "siafi": "3157",
+        "numero": "828"
+      },
+      "id": 4
     }
   ]
 }

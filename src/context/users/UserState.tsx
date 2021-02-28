@@ -33,32 +33,20 @@ const UserState: React.FC = (props) => {
 
   const [state, dispatch] = useReducer(userReducer, initialState);
 
-  const getUsers = async () => {
+  const getUsers = async (filter: string = "") => {
     try {
       dispatch(setUserLoading());
-      const res = await Users.list();
+      const res = await Users.list(filter);
       dispatch(setUsers(res));
     } catch (error) {
       dispatch(setUserError("Erro ao tentar retornar lista de usuários."));
     }
   };
 
-  const addUser = async () => {
+  const addUser = async (user: IUser) => {
     try {
       dispatch(setUserLoading());
-      const res = await Users.create({
-        nome: "Maria12",
-        cpf: "",
-        email: "rafael@gmail.com",
-        endereco: {
-          cep: "111111",
-          bairro: "22222",
-          complemento: "3333",
-          logradouro: "4444",
-          localidade: "55555",
-          numero: 0,
-        },
-      });
+      const res = await Users.create(user);
       dispatch(setCreateUser(res));
     } catch (error) {
       dispatch(setUserError("Erro ao tentar criar usuário."));

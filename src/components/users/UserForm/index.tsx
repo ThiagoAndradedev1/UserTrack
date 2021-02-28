@@ -13,7 +13,7 @@ import Users from "../../../api/agent";
 const UserForm: React.FC = () => {
   const userContext = useContext(UserContext);
 
-  const { current, updateUser, loading } = userContext;
+  const { current, updateUser, loading, addUser } = userContext;
 
   useEffect(() => {
     if (current !== null) {
@@ -69,7 +69,11 @@ const UserForm: React.FC = () => {
   };
 
   const onSubmit = () => {
-    updateUser(user);
+    if (current) {
+      updateUser(user);
+    } else {
+      addUser(user);
+    }
   };
 
   return (
