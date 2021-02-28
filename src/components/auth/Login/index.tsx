@@ -1,57 +1,61 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Segment, Form, Grid, Header, Icon } from "semantic-ui-react";
-import { Form as FinalForm, Field } from "react-final-form";
 import TextInput from "./TextInput";
-import { combineValidators, isRequired } from "revalidate";
 import { StyledLabel, StyledButton } from "./LoginElements";
+import AuthContext from "../../../context/auth/authContext";
+import { RouteComponentProps } from "react-router-dom";
+import { setTokenLocalStorage } from "../../../utils/utils";
 
-const Login: React.FC = () => {
-  const validate = combineValidators({
-    email: isRequired({ message: "The event title is required" }),
-    senha: isRequired({ message: "The event title is required" }),
-  });
+interface ChildComponentProps extends RouteComponentProps {}
 
-  const handleFinalFormSubmit = (values: any) => {};
+const Login: React.FC<ChildComponentProps> = ({ history }) => {
+  const authContext = useContext(AuthContext);
+
+  const { loading, login } = authContext;
+
+  const handleSubmit = () => {
+    login();
+    history.push("/users");
+    setTokenLocalStorage();
+  };
 
   return (
     <Grid>
       <Grid.Row columns={3}>
         <Grid.Column></Grid.Column>
         <Grid.Column>
-          <Segment placeholder>
-            <Header icon>
-              <Icon disabled name='users' />
-            </Header>{" "}
-            <FinalForm
-              validate={validate}
-              onSubmit={handleFinalFormSubmit}
-              render={({ handleSubmit }) => (
-                <Form onSubmit={handleSubmit}>
-                  <StyledLabel>Email</StyledLabel>
-                  <Field
-                    placeholder='Email'
-                    name='title'
-                    time={true}
-                    component={TextInput}
-                  />
-                  <StyledLabel>Senha</StyledLabel>
-                  <Field
-                    placeholder='Senha'
-                    name='title'
-                    time={true}
-                    component={TextInput}
-                  />
-                  <StyledButton
-                    fluid
-                    secondary
-                    type='submit'
-                    name='title'
-                    content='Log In'
-                  />
-                </Form>
-              )}
-            />
-          </Segment>
+          {loading ? (
+            <h1>Loading...</h1>
+          ) : (
+            <Segment placeholder>
+              <Header icon>
+                <Icon disabled name="users" />
+              </Header>{" "}
+              <Form onSubmit={handleSubmit}>
+                <StyledLabel>Email</StyledLabel>
+                <Form.Field
+                  placeholder="Email"
+                  name="title"
+                  time={true}
+                  component={TextInput}
+                />
+                <StyledLabel>Senha</StyledLabel>
+                <Form.Field
+                  placeholder="Senha"
+                  name="title"
+                  time={true}
+                  component={TextInput}
+                />
+                <StyledButton
+                  fluid
+                  secondary
+                  type="submit"
+                  name="title"
+                  content="Log In"
+                />
+              </Form>
+            </Segment>
+          )}
         </Grid.Column>
         <Grid.Column></Grid.Column>
       </Grid.Row>

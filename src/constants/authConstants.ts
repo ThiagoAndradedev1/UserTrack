@@ -1,1 +1,5 @@
-export const AUTH_USERS = "AUTH_USERS";
+export enum AUTH_TYPES {
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT",
+  LOADING = "LOADING",
+}

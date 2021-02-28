@@ -1,27 +1,16 @@
-// import React, { useContext } from "react";
-// import { Route, Redirect } from "react-router-dom";
-// import AuthContext from "../../context/auth/authContext";
+import { useContext } from "react";
+import { Redirect, Route, RouteProps } from "react-router-dom";
+import AuthContext from "../../context/auth/authContext";
 
-// const PrivateRoute: React.FC = ({ component: Component, ...rest }) => {
-//   const authContext = useContext(AuthContext);
-//   const { isAuthenticated } = authContext;
+interface ProtectedRouteProps extends RouteProps {
+  component: any;
+}
 
-//   return (
-//     <Route
-//       {...rest}
-//       render={(props) =>
-//         !isAuthenticated ? <Redirect to='/login' /> : <Component {...props} />
-//       }
-//     />
-//   );
-// };
-
-// export default PrivateRoute;
-
-import React from "react";
-
-const PrivateRoute = () => {
-  return <div></div>;
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ ...rest }) => {
+  const { authenticated } = useContext(AuthContext);
+  if (!authenticated) {
+    return <Redirect to="/login" />;
+  } else {
+    return <Route {...rest} />;
+  }
 };
-
-export default PrivateRoute;

@@ -1,36 +1,20 @@
-import React, { useEffect, useContext } from "react";
-import { Grid, Image } from "semantic-ui-react";
-import UserContext from "../../../context/users/usersContext";
-import { IUserState } from "../../../models/userState";
+import React from "react";
+import { Grid, Header, Image, Segment } from "semantic-ui-react";
 
 const HomePage: React.FC = () => {
-  // const userContext = useContext(UserContext);
-
-  // const { getUsers, addUser, updateUser, deleteUser } = useContext<IUserState>(
-  //   UserContext
-  // );
-
-  // useEffect(() => {
-  //   addUser();
-  //   getUsers();
-  //   updateUser();
-  //   deleteUser();
-  // eslint-disable-next-line
-  // }, []);
-
   return (
-    <Grid>
-      <Grid.Row columns={3}>
-        <Grid.Column>
-          <Image src="https://react.semantic-ui.com/images/wireframe/image.png" />
-        </Grid.Column>
-        <Grid.Column>
-          <Image src="https://react.semantic-ui.com/images/wireframe/image.png" />
-        </Grid.Column>
-        <Grid.Column>
-          <Image src="https://react.semantic-ui.com/images/wireframe/image.png" />
-        </Grid.Column>
-      </Grid.Row>
+    <Grid textAlign="center" style={{ height: "80vh" }} verticalAlign="middle">
+      <Grid.Column mobile={14} style={{ maxWidth: 450 }}>
+        <Segment size="massive">
+          <Header color="grey" as="h2" textAlign="center">
+            <Image src="images/initialpage.png" />{" "}
+            <p style={{ fontSize: "1.33em" }}>Bem Vindo</p>
+            <Header.Subheader>
+              Cadastre-se e tenha acesso a vários Pokémons.
+            </Header.Subheader>
+          </Header>
+        </Segment>
+      </Grid.Column>
     </Grid>
   );
 };

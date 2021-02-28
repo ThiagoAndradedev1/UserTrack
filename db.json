@@ -34,20 +34,6 @@
       "id": 2
     },
     {
-      "nome": "Maria12",
-      "cpf": "",
-      "email": "rafael@gmail.com",
-      "endereco": {
-        "cep": "111111",
-        "bairro": "22222",
-        "complemento": "3333",
-        "logradouro": "4444",
-        "localidade": "55555",
-        "numero": 0
-      },
-      "id": 3
-    },
-    {
       "nome": "Fulaninho",
       "email": "fulano@gmail.com",
       "cpf": "0000000",

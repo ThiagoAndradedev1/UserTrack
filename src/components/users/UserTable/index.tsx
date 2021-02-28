@@ -2,14 +2,18 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { Table, Grid, Input, Button } from "semantic-ui-react";
 import UserContext from "../../../context/users/usersContext";
+import AuthContext from "../../../context/auth/authContext";
 import { IUser } from "../../../models/user";
 import { IUserState } from "../../../models/userState";
+import { IAuthState } from "../../../models/authState";
 
 interface ChildComponentProps extends RouteComponentProps {}
 
 const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
-  const userContext = useContext<IUserState>(UserContext);
   const [searchUserTerm, setSearchUserTerm] = useState<string>("");
+
+  const userContext = useContext<IUserState>(UserContext);
+  const authContext = useContext<IAuthState>(AuthContext);
 
   const {
     getUsers,
@@ -20,10 +24,13 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
     error,
   } = userContext;
 
+  const { authenticated } = authContext;
+
   useEffect(() => {
     getUsers();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [authenticated, history]);
 
   const onUpdate = (user: IUser) => {
     history.push("/userform");
@@ -42,12 +49,18 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
     getUsers();
   };
 
+  if (error) {
+    return (
+      <div>
+        <h1>Ocorreu um erro!</h1>
+      </div>
+    );
+  }
+
   return (
     <Fragment>
       {loading ? (
-        <h1>Loading...</h1>
-      ) : error ? (
-        <h1>{error}</h1>
+        <h1>Loading..</h1>
       ) : (
         <Grid>
           {users.length === 0 && <h1>Não existe nenhum usuário!</h1>}
@@ -96,6 +109,59 @@ const UserTable: React.FC<ChildComponentProps> = ({ history }) => {
         </Grid>
       )}
     </Fragment>
+    // <Fragment>
+    //   {loading ? (
+    //     <h1>Loading...</h1>
+    //   ) : error ? (
+    //     <h1>{error}</h1>
+    //   ) : (
+    //     <Grid>
+    //       {users.length === 0 && <h1>Não existe nenhum usuário!</h1>}
+    //       <Grid.Column width={2}></Grid.Column>
+    //       <Grid.Column width={12}>
+    //         <Input
+    //           onChange={(e) => setSearchUserTerm(e.target.value)}
+    //           fluid
+    //           icon="search"
+    //           placeholder="Search..."
+    //         />
+    //         <button onClick={() => searchUser()}>Search</button>
+    //         <button onClick={() => clearUser()}>Clear</button>
+    //         <Table columns={4}>
+    //           <Table.Header>
+    //             <Table.Row>
+    //               <Table.HeaderCell>Nome</Table.HeaderCell>
+    //               <Table.HeaderCell>CPF</Table.HeaderCell>
+    //               <Table.HeaderCell>Email</Table.HeaderCell>
+    //               <Table.HeaderCell>Cidade</Table.HeaderCell>
+    //               <Table.HeaderCell></Table.HeaderCell>
+    //             </Table.Row>
+    //           </Table.Header>
+    //           <Table.Body>
+    //             {users.map((user) => (
+    //               <Table.Row key={user.id}>
+    //                 <Table.Cell>{user.nome}</Table.Cell>
+    //                 <Table.Cell>{user.cpf}</Table.Cell>
+    //                 <Table.Cell>{user.email}</Table.Cell>
+    //                 <Table.Cell>{user.email}</Table.Cell>
+    //                 <Table.Cell>
+    //                   {" "}
+    //                   <Button onClick={() => onUpdate(user)} color="black">
+    //                     Editar
+    //                   </Button>
+    //                   <Button onClick={() => onDelete(user.id!)} color="red">
+    //                     Deletar
+    //                   </Button>
+    //                 </Table.Cell>
+    //               </Table.Row>
+    //             ))}
+    //           </Table.Body>
+    //         </Table>
+    //       </Grid.Column>
+    //       <Grid.Column width={2}></Grid.Column>
+    //     </Grid>
+    //   )}
+    // </Fragment>
   );
 };
 
